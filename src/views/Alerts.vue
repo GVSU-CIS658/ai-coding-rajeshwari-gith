@@ -47,7 +47,12 @@ function fmt(n: number, d = 2) {
 
 <template>
   <div>
-    <h1>Price Alerts</h1>
+    <div style="margin-bottom: 32px">
+      <h1 class="display hero">Price <em>Alerts.</em></h1>
+      <div class="subtitle" style="margin-top: 10px">
+        {{ alerts.alerts.length }} rule{{ alerts.alerts.length === 1 ? '' : 's' }} active
+      </div>
+    </div>
 
     <div class="card" style="margin-bottom: 20px">
       <h2>Create Alert</h2>

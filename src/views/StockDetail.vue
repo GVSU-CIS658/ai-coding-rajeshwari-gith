@@ -63,18 +63,16 @@ function toggleWatchlist() {
   <div>
     <button @click="router.back()" style="margin-bottom: 16px">← Back</button>
 
-    <div class="row between" style="margin-bottom: 18px; flex-wrap: wrap; gap: 16px">
+    <div class="row between" style="margin-bottom: 28px; flex-wrap: wrap; gap: 20px">
       <div>
-        <h1 style="margin-bottom: 4px">
-          <span class="mono">{{ symbol }}</span>
-          <span v-if="meta" class="muted" style="font-weight: 400; font-size: 16px; margin-left: 10px">
-            {{ meta.name }}
-          </span>
+        <h1 class="display hero" style="font-size: 56px">
+          <span class="mono" style="font-family: 'JetBrains Mono', monospace; font-size: 48px">{{ symbol }}</span>
         </h1>
-        <span v-if="meta" class="badge">{{ meta.sector }}</span>
-        <span v-if="quote" class="status-pill mono" style="margin-left: 8px">
-          {{ quote.source }}
-        </span>
+        <div style="margin-top: 10px" class="row">
+          <span v-if="meta" class="subtitle">{{ meta.name }}</span>
+          <span v-if="meta" class="badge">{{ meta.sector }}</span>
+          <span v-if="quote" class="status-pill">{{ quote.source }}</span>
+        </div>
       </div>
       <div class="row">
         <button :class="{ primary: !watchlist.has(symbol) }" @click="toggleWatchlist">

@@ -25,7 +25,10 @@ function clearCache() {
 
 <template>
   <div>
-    <h1>Settings</h1>
+    <div style="margin-bottom: 32px">
+      <h1 class="display hero">Set<em>tings.</em></h1>
+      <div class="subtitle" style="margin-top: 10px">API key, appearance, and cache</div>
+    </div>
 
     <div class="card" style="margin-bottom: 20px; max-width: 720px">
       <h2>Alpha Vantage API Key</h2>

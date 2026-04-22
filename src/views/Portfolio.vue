@@ -100,7 +100,13 @@ function fmt(n: number, d = 2) {
 
 <template>
   <div>
-    <h1>Portfolio</h1>
+    <div style="margin-bottom: 32px">
+      <h1 class="display hero">Port<em>folio.</em></h1>
+      <div class="subtitle" style="margin-top: 10px">
+        {{ portfolio.holdings.length }} holding{{ portfolio.holdings.length === 1 ? '' : 's' }}
+        · Weighted-average cost basis
+      </div>
+    </div>
 
     <div class="grid cols-4" style="margin-bottom: 20px">
       <div class="card kpi">

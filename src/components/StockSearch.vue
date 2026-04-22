@@ -21,23 +21,18 @@ function select(symbol: string) {
   router.push({ name: 'stock', params: { symbol } });
 }
 
-function onFocus() {
-  open.value = true;
-}
-
-function onBlur() {
-  // delay so click on result fires first
-  setTimeout(() => (open.value = false), 150);
-}
+function onFocus() { open.value = true; }
+function onBlur() { setTimeout(() => (open.value = false), 150); }
 </script>
 
 <template>
   <div class="search-wrap">
+    <span class="search-icon">⌕</span>
     <input
       v-model="query"
       @focus="onFocus"
       @blur="onBlur"
-      placeholder="Search stocks (AAPL, Tesla…)"
+      placeholder="Search stocks…"
     />
     <div v-if="open && results.length" class="search-results">
       <div
@@ -49,7 +44,7 @@ function onBlur() {
         <div class="row between">
           <div>
             <span class="mono" style="font-weight: 700">{{ r.symbol }}</span>
-            <span class="muted" style="margin-left: 10px">{{ r.name }}</span>
+            <span class="muted" style="margin-left: 10px; font-size: 13px">{{ r.name }}</span>
           </div>
           <span class="badge">{{ r.sector }}</span>
         </div>
