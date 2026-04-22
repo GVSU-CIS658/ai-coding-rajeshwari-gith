@@ -1,119 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StockPulse — Portfolio & Watchlist</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    /* ── Design tokens ─────────────────────────────────── */
-    :root {
-      --bg:      #080b12;
-      --surface: #0e1220;
-      --card:    #131826;
-      --border:  #1d2338;
-      --text:    #dde4f0;
-      --muted:   #58637a;
-      --green:   #00c896;
-      --red:     #ff4560;
-      --accent:  #818cf8;
-      --mono:    'JetBrains Mono', monospace;
-      --sans:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    [data-theme="light"] {
-      --bg:      #f0f2f7;
-      --surface: #ffffff;
-      --card:    #ffffff;
-      --border:  #dde2ee;
-      --text:    #111827;
-      --muted:   #8896b0;
-    }
-
-    /* ── Reset ─────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: var(--sans); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
-    #root { height: 100%; }
-
-    /* ── Scrollbar ─────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-
-    /* ── Input focus ring ──────────────────────────────── */
-    input:focus, select:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent) !important; }
-
-    /* ── Ticker tape ───────────────────────────────────── */
-    @keyframes tickerScroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-33.333%); }
-    }
-    .ticker-inner {
-      display: flex;
-      animation: tickerScroll 100s linear infinite;
-      white-space: nowrap;
-      align-items: center;
-      height: 100%;
-      will-change: transform;
-    }
-    .ticker-inner:hover { animation-play-state: paused; cursor: default; }
-
-    /* ── Animations ────────────────────────────────────── */
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.35; }
-    }
-    @keyframes fadeIn {
-      from { transform: translateY(5px); }
-      to   { transform: translateY(0); }
-    }
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.97); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-    main > div { animation: fadeIn 0.18s ease; }
-    .heat-cell { transition: transform 0.12s, box-shadow 0.12s; }
-    .heat-cell:hover { transform: scale(1.05) !important; box-shadow: 0 6px 20px rgba(0,0,0,0.5) !important; }
-  </style>
-</head>
-<body>
-  <div id="root"></div>
-
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
-    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
-    crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
-    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
-    crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
-    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
-    crossorigin="anonymous"></script>
-
-  <!-- Data (plain JS — no Babel needed) -->
-  <script src="data.js"></script>
-  <script src="api.js"></script>
-
-  <!-- Components, pages, app (transpiled by Babel) -->
-  <script type="text/babel" src="components.jsx"></script>
-  <script type="text/babel" src="pages.jsx"></script>
-  <script type="text/babel" src="app.jsx"></script>
-
-  <template id="__bundler_thumbnail">
-    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-      <rect width="120" height="80" fill="#080b12"/>
-      <rect x="8" y="8" width="28" height="64" rx="4" fill="#131826"/>
-      <rect x="44" y="8" width="68" height="30" rx="4" fill="#131826"/>
-      <rect x="44" y="42" width="68" height="30" rx="4" fill="#131826"/>
-      <path d="M52 60 L60 52 L68 56 L80 44" stroke="#00c896" strokeWidth="2" fill="none"/>
-      <circle cx="80" cy="44" r="2" fill="#00c896"/>
-      <rect x="14" y="16" width="16" height="3" rx="1.5" fill="#818cf8" opacity="0.7"/>
-      <rect x="14" y="24" width="12" height="3" rx="1.5" fill="#58637a" opacity="0.5"/>
-      <rect x="14" y="32" width="12" height="3" rx="1.5" fill="#58637a" opacity="0.5"/>
-      <rect x="14" y="40" width="12" height="3" rx="1.5" fill="#58637a" opacity="0.5"/>
-      <rect x="14" y="48" width="12" height="3" rx="1.5" fill="#58637a" opacity="0.5"/>
-    </svg>
-  </template>
-</body>
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockPulse — Live Watchlist & Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

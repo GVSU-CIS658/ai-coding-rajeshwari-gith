@@ -1,61 +1,66 @@
-# StockPulse — AI Hackathon Project
-**CIS 371 · GVSU · 2026**
+# StockPulse — Live Stock Watchlist & Portfolio
 
-A live stock watchlist and portfolio web app built with AI-assisted rapid development.
+**CIS 371 · GVSU · AI Hackathon 2026**
+
+A single-page stock watchlist and portfolio tracker built with Vue 3, with live
+quotes from the Alpha Vantage API.
 
 ## Live Demo
-🔗 Deployed at GitHub Pages (see URL above)
+
+Deployed via GitHub Pages — see the repo's Pages URL.
 
 ## Features
-- **Live Stock Data** — Alpha Vantage API (`GLOBAL_QUOTE` + `TIME_SERIES_DAILY`)
-- **Stock Search** — Search by ticker symbol with autocomplete
-- **Watchlist** — Add/remove stocks, sparkline mini-charts, sector badges
-- **Portfolio** — Holdings with P&L, allocation donut chart, 60-day equity curve
-- **Stock Detail** — Interactive price chart (1W–1Y), volume bars, momentum gauge, 52-week range
-- **Price Alerts** — Set above/below price alerts per stock
-- **Market Dashboard** — Gainers/losers, sector heatmap, Bloomberg-style market heat map, news feed
-- **Scrolling Ticker Tape** — Live price strip with real-time updates
-- **Dark / Light Mode** — Persisted across sessions
 
-## Stock Data API
-**Alpha Vantage** — https://www.alphavantage.co
-- Endpoint: `GLOBAL_QUOTE` for live price/change/volume
-- Endpoint: `TIME_SERIES_DAILY` for 100-day price history
-- Caching: sessionStorage (45s for quotes, 5min for history)
-- Rate limiting: 13s pacing between requests (free tier = 5 req/min)
-
-## AI Tools Used
-- **Claude (Anthropic)** — UI design, component architecture, API integration, debugging
-- Used for: planning, code generation, styling, Alpha Vantage integration, chart rendering
+- **Dashboard** — portfolio KPIs, top gainers/losers, sector performance summary
+- **Watchlist** — add / remove / refresh symbols, live price table
+- **Portfolio** — holdings with market value, cost basis, gain/loss, weighted-avg
+  cost basis when buying more shares, allocation doughnut chart, 60-day value
+  history line chart
+- **Stock Detail** — per-symbol page with live quote, range selector (1W–1Y),
+  price history chart, period stats
+- **Price Alerts** — above/below triggers per symbol, live status
+- **Settings** — Alpha Vantage API key, theme toggle, cache clear
+- **Ticker Tape** — scrolling live price strip across the top
+- **Dark / Light Mode** — persisted in localStorage
 
 ## Tech Stack
-- React 18 (via CDN + Babel standalone) — prototype UI
-- Alpha Vantage REST API
-- Vanilla JS / CSS custom properties for theming
-- GitHub Actions for CI/CD deployment
 
-> **Note:** This is a hi-fi prototype demonstrating the full feature set.
-> The Vue + Vue Router + Pinia version shares the same architecture and API integration pattern.
+- **Vue 3** (Composition API + `<script setup>`) + TypeScript
+- **Vue Router 4** (hash history, works on GitHub Pages with no server config)
+- **Pinia** for state management (watchlist, portfolio, alerts, quotes, settings)
+- **Chart.js** + **vue-chartjs** for price and allocation charts
+- **Vite** for dev/build
+- **Alpha Vantage** REST API (`GLOBAL_QUOTE`, `TIME_SERIES_DAILY`)
+- **GitHub Actions** for CI/CD (build Vite → deploy to Pages)
 
-## What's Working
-- ✅ Live stock data via Alpha Vantage (add API key in Settings)
-- ✅ Stock search and watchlist management
-- ✅ Portfolio P&L tracking
-- ✅ Interactive price charts with volume
-- ✅ Price alerts system
-- ✅ Market heatmap and sector performance
-- ✅ Dark/light mode
-- ✅ GitHub Pages deployment
+## API Integration
 
-## Deployment Notes
-- No build step required — fully browser-side
-- Add your Alpha Vantage API key in the Settings page for live data
-- Free API tier: 25 requests/day, 5 requests/minute
-- App gracefully falls back to realistic simulated data if no key is set
+Alpha Vantage free tier limits (5 req/min, 25/day) are handled by:
 
-## Setup
-No installation needed. Open `index.html` in a browser or visit the GitHub Pages URL.
+- `sessionStorage` caching — quotes cached 45s, history 10min
+- 13s pacing between network calls when refreshing a batch
+- Graceful fallback to seeded synthetic prices when no API key is set or when
+  the rate limit is hit
 
-To use live stock data:
-1. Get a free API key at https://www.alphavantage.co/support/#api-key
-2. Open the app → Settings → paste your API key → Save
+## Running Locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+Output goes to `dist/` and is deployed to GitHub Pages by the workflow in
+`.github/workflows/deploy.yml`.
+
+## AI Assistance
+
+This project was built with help from Claude (Anthropic) — used for planning the
+component architecture, scaffolding Vue/Pinia boilerplate, writing the Alpha
+Vantage wrapper with caching + rate-limit pacing, and styling. All code was
+reviewed before commit.
